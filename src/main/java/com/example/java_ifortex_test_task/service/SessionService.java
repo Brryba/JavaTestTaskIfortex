@@ -8,7 +8,9 @@ import com.example.java_ifortex_test_task.repository.SessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +27,9 @@ public class SessionService {
 
     // Returns only Sessions from Active users that were ended before 2025
     public List<SessionResponseDTO> getSessionsFromActiveUsersEndedBefore2025() {
-        return null;
+        List<Session> sessions = sessionRepository.getSessionsFromActiveUsersEndedBefore2025(LocalDateTime.of(2025, 1, 1, 0, 0));
+        LocalDateTime endDate = LocalDateTime.of(2025, 1, 1, 0, 0);
+        System.out.println(endDate.getYear());
+        return sessions.stream().map(sessionMapper::toDto).collect(Collectors.toList());
     }
 }
