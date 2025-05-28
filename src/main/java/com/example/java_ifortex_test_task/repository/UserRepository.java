@@ -10,12 +10,12 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = """
             SELECT users.* FROM public.users
-            JOIN (SELECT max(started_at_utc) min_date, user_id
+            JOIN (SELECT max(started_at_utc) max_date, user_id
                FROM public.sessions
                WHERE sessions.device_type = :#{#deviceType.getCode()}
                GROUP BY user_id) start_dates
             ON users.id = start_dates.user_id
-            ORDER BY start_dates.min_date DESC""", nativeQuery = true)
+            ORDER BY start_dates.max_date DESC""", nativeQuery = true)
     List<User> getUsersWithAtLeastOneMobileSession(DeviceType deviceType);
 
     @Query(value = """
