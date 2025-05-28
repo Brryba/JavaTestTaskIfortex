@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query(value = "", nativeQuery = true)
+    @Query(value = "SELECT * FROM users", nativeQuery = true)
     List<User> getUsersWithAtLeastOneMobileSession(DeviceType deviceType);
 
-    @Query(value = "", nativeQuery = true)
+    @Query(value = "SELECT * FROM users", nativeQuery = true)
     User getUserWithMostSessions();
 }
