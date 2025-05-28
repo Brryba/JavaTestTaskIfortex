@@ -20,7 +20,6 @@ public class SessionService {
 
     // Returns the first (earliest) desktop Session
     public SessionResponseDTO getFirstDesktopSession() {
-        System.out.println(DeviceType.DESKTOP.getCode());
         Session firstSession = sessionRepository.getFirstDesktopSession(DeviceType.DESKTOP);
         return sessionMapper.toDto(firstSession);
     }
@@ -28,8 +27,6 @@ public class SessionService {
     // Returns only Sessions from Active users that were ended before 2025
     public List<SessionResponseDTO> getSessionsFromActiveUsersEndedBefore2025() {
         List<Session> sessions = sessionRepository.getSessionsFromActiveUsersEndedBefore2025(LocalDateTime.of(2025, 1, 1, 0, 0));
-        LocalDateTime endDate = LocalDateTime.of(2025, 1, 1, 0, 0);
-        System.out.println(endDate.getYear());
         return sessions.stream().map(sessionMapper::toDto).collect(Collectors.toList());
     }
 }

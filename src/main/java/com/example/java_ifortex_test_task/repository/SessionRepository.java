@@ -16,21 +16,21 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
      */
     @Query(value = """
             SELECT sessions.id,\s
-                    sessions.started_at_utc,\s
-                    sessions.ended_at_utc,\s
-                    sessions.device_type - 1 as device_type, \s
-                    sessions.user_id FROM sessions \s
-            WHERE sessions.device_type = :#{#deviceType.getCode()} \s
-            ORDER BY started_at_utc\s
+                    sessions.started_at_utc,
+                    sessions.ended_at_utc,
+                    sessions.device_type - 1 as device_type,
+                    sessions.user_id FROM sessions
+            WHERE sessions.device_type = :#{#deviceType.getCode()}
+            ORDER BY started_at_utc
             LIMIT 1""", nativeQuery = true)
     Session getFirstDesktopSession(DeviceType deviceType);
 
     @Query(value = """
             SELECT sessions.id,\s
-                    sessions.started_at_utc,\s
-                    sessions.ended_at_utc,\s
-                    sessions.device_type - 1 as device_type, \s
-                    sessions.user_id FROM sessions \s
+                    sessions.started_at_utc,
+                    sessions.ended_at_utc,
+                    sessions.device_type - 1 as device_type,
+                    sessions.user_id FROM sessions
             WHERE date_part('year', ended_at_utc) < :#{#endDate.getYear()}
             ORDER BY started_at_utc DESC""", nativeQuery = true)
     List<Session> getSessionsFromActiveUsersEndedBefore2025(LocalDateTime endDate);
